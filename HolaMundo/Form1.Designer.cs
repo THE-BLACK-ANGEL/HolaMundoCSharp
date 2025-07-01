@@ -6,7 +6,7 @@ namespace HolaMundo
     partial class Form1
     {
         /// <summary>
-        /// Variable del diseñador necesaria.
+        /// Variables del diseñador necesaria.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.TextBox textBox1;
@@ -20,8 +20,8 @@ namespace HolaMundo
         private Button button2;
         private DataGridViewTextBoxColumn ID;
         private DataGridViewCheckBoxColumn Realizada;
-        private DataGridViewCheckBoxColumn Fecha;
-        private DataGridViewTextBoxColumn Nombre;
+        private DataGridViewTextBoxColumn Fecha;
+        private DataGridViewTextBoxColumn descripcion;
     }
 }
 
