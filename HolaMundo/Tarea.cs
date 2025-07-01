@@ -12,8 +12,6 @@ namespace HolaMundo
 
         private static int contador = 0;
 
-
-
         public Tarea(string descripcion, DateTime fechaMaxima, bool realizada)
         {
             contador++;
