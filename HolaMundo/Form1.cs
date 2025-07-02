@@ -266,6 +266,7 @@ namespace HolaMundo
         /// </summary>
         public void MostrarTareas()
         {
+            // Recorremos la lista de tareas y las agregamos al DataGridView
             foreach (Tarea tarea in tareas)
             {
                 dataGridView1.Rows.Add(tarea.ID, tarea.realizada, tarea.fecha.ToShortDateString(), tarea.descripcion);
@@ -326,8 +327,13 @@ namespace HolaMundo
             try {
                 //Creamos una lista de tareas (lista de tareas con los cambios realizados)
                 List<Tarea> tareasActualizadas = new List<Tarea>();
+
+                // Recorremos las filas del DataGridView y creamos una lista de tareas actualizadas
+                // NO FUNCIONA COMO TAL PARA LO QUE ESTA HECHO, PERO ME SIRVE PARA OBTENER LOS DATOS DE LAS CELDAS
+                // Y PODER EXPORTARLAS A UN JSON.
                 foreach (DataGridViewRow fila in dataGridView1.Rows)
                 {
+                    // Verificamos que la fila no sea una nueva fila (la última fila vacía del DataGridView)
                     if (!fila.IsNewRow) {
 
                         String descripcion = fila.Cells["Descripcion"].Value?.ToString();
@@ -395,15 +401,17 @@ namespace HolaMundo
                     Title = "Guardar archivo JSON",
                     DefaultExt = "json"
                 };
-                
+
+                // Mostramos el diálogo para que el usuario seleccione la ubicación y el nombre del archivo
                 if (saveFileDialog.ShowDialog() == DialogResult.OK && Path.GetExtension(saveFileDialog.FileName).ToLower() == ".json")
                 {
+                    // Guardamos el contenido del JSON en el archivo seleccionado
                     File.WriteAllText(saveFileDialog.FileName, s);
                     MessageBox.Show("Archivo guardado correctamente en: " + saveFileDialog.FileName, "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("No se seleccionó ningún archivo o el archivo no es del formato deseado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("No se seleccionó ninguna ubicacion o el archivo no es del formato deseado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
             }
@@ -414,14 +422,16 @@ namespace HolaMundo
         
         }
 
-        private void dataGridView1_estadoCambiado(object sender, EventArgs e)
+        //Metodo para manejar el evento de cambio de estado del DataGridView en caso de que se modifique una celda.
+        //PD : NO ME FUNCIONA Y NO SE POR QUÉ, ASÍ QUE LO DEJO COMENTADO.
+        /*private void dataGridView1_estadoCambiado(object sender, EventArgs e)
         {
             if (dataGridView1.IsCurrentCellDirty)
             {
                 dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
-
+        */
 
 
 
