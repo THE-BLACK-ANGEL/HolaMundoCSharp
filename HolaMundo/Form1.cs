@@ -1,10 +1,10 @@
 ﻿using System.Windows.Forms;
 using System.ComponentModel;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System;
 using System.Linq;
 using System.IO;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Collections.Generic;
 
 
@@ -112,7 +112,6 @@ namespace HolaMundo
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(553, 360);
             this.dataGridView1.TabIndex = 6;
-            this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_estadoCambiado);
             // 
             // button1
             // 
@@ -338,7 +337,7 @@ namespace HolaMundo
 
                         String descripcion = fila.Cells["Descripcion"].Value?.ToString();
                         DateTime fecha = Convert.ToDateTime(fila.Cells["Fecha"].Value);
-                        bool realizada = Convert.ToBoolean(fila.Cells["realizada"]);
+                        bool realizada = Convert.ToBoolean(fila.Cells["Realizada"].Value);
                         Tarea t = new Tarea(descripcion, fecha, realizada);
                         tareasActualizadas.Add(t);
                     }
