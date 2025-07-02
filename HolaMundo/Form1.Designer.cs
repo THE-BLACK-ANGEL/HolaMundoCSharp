@@ -18,6 +18,8 @@ namespace HolaMundo
         private System.Windows.Forms.DataGridView dataGridView1;
         private Button button1;
         private Button button2;
+        private Button button3;
+        private Button button4;
         private DataGridViewTextBoxColumn ID;
         private DataGridViewCheckBoxColumn Realizada;
         private DataGridViewTextBoxColumn Fecha;

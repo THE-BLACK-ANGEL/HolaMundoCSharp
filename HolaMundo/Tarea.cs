@@ -3,6 +3,7 @@
 
 namespace HolaMundo
 {
+    
     public class Tarea
     {
         public string descripcion { get; set; }
@@ -12,11 +13,11 @@ namespace HolaMundo
 
         private static int contador = 0;
 
-        public Tarea(string descripcion, DateTime fechaMaxima, bool realizada)
+        public Tarea(string descripcion, DateTime fecha, bool realizada)
         {
             contador++;
             this.descripcion = descripcion;
-            this.fecha = fechaMaxima;
+            this.fecha = fecha;
             this.realizada = realizada;
             this.ID = contador;
         }

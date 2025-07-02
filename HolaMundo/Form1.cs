@@ -2,6 +2,12 @@
 using System.ComponentModel;
 using System;
 using System.Linq;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Collections.Generic;
+
+
 
 
 namespace HolaMundo
@@ -12,7 +18,6 @@ namespace HolaMundo
         public Form1()
         {
             InitializeComponent();
-
         }
 
         /// <summary>
@@ -27,12 +32,14 @@ namespace HolaMundo
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Realizada = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -101,10 +108,55 @@ namespace HolaMundo
             this.Realizada,
             this.Fecha,
             this.descripcion});
-            this.dataGridView1.Location = new System.Drawing.Point(272, 144);
+            this.dataGridView1.Location = new System.Drawing.Point(274, 144);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(553, 360);
             this.dataGridView1.TabIndex = 6;
+            this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_estadoCambiado);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.button1.Location = new System.Drawing.Point(65, 343);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(142, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Añadir tarea";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.AñadirTarea);
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.button2.Location = new System.Drawing.Point(64, 372);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(143, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Eliminar tarea";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.EliminarTarea);
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.button3.Location = new System.Drawing.Point(408, 510);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(139, 23);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "Importar de JSON";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.ImportarJSON);
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.button4.Location = new System.Drawing.Point(554, 510);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(139, 23);
+            this.button4.TabIndex = 10;
+            this.button4.Text = "Exportar a JSON";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.ExportarJSON);
             // 
             // ID
             // 
@@ -114,7 +166,7 @@ namespace HolaMundo
             // Realizada
             // 
             this.Realizada.HeaderText = "Realizada";
-            this.Realizada.Name = "Realizada";
+            this.Realizada.Name = "realizada";
             // 
             // Fecha
             // 
@@ -128,32 +180,12 @@ namespace HolaMundo
             this.descripcion.Name = "descripcion";
             this.descripcion.Width = 275;
             // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button1.Location = new System.Drawing.Point(65, 343);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(142, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Añadir tarea";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.añadirTarea);
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button2.Location = new System.Drawing.Point(64, 372);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(143, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Eliminar tarea";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.eliminarTarea);
-            // 
             // Form1
             // 
             this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(859, 565);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
@@ -176,12 +208,12 @@ namespace HolaMundo
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void añadirTarea(object sender, EventArgs e)
+        public void AñadirTarea(object sender, EventArgs e)
         {
             Tarea nuevaTarea = new Tarea(textBox1.Text,dateTimePicker1.Value,checkBox1.Checked);
             tareas.Add(nuevaTarea);
             dataGridView1.Rows.Clear(); // Limpiar el DataGridView antes de agregar nuevas filas
-            mostrarTareas(); // Mostrar las tareas
+            MostrarTareas(); // Mostrar las tareas
 
         }
 
@@ -190,7 +222,7 @@ namespace HolaMundo
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void eliminarTarea(object sender, EventArgs e)
+        public void EliminarTarea(object sender, EventArgs e)
         {
 
             if (dataGridView1.SelectedRows.Count > 0)
@@ -220,7 +252,7 @@ namespace HolaMundo
                     tareas.Remove(tareaSeleccionada); // Se elimina de la lista
                 }
                 dataGridView1.Rows.Clear();// Limpiamos el DataGridView antes de agregar la lista actualizada
-                mostrarTareas();
+                MostrarTareas();
             }
             else
             {
@@ -232,13 +264,164 @@ namespace HolaMundo
         /// <summary>
         /// Método para mostrar las tareas en el DataGridView.
         /// </summary>
-        private void mostrarTareas()
+        public void MostrarTareas()
         {
             foreach (Tarea tarea in tareas)
             {
                 dataGridView1.Rows.Add(tarea.ID, tarea.realizada, tarea.fecha.ToShortDateString(), tarea.descripcion);
             }
         }
+
+        /// <summary>
+        /// Metodo para importar y exportar tareas desde y hacia un archivo JSON.
+        /// </summary>
+        public void ImportarJSON(object sender, EventArgs e)
+        {
+            // Obtenemos la ruta del archivo JSON seleccionado por el usuario
+            String ruta = ObtenerRutaArchivo();
+            // Verificamos si el archivo existe
+            if (!File.Exists(ruta))
+            {
+                MessageBox.Show("El archivo seleccionado no existe o no es un archivo JSON válido.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else {
+                String jsonString = File.ReadAllText(ruta);
+                try 
+                {
+                    // Deserializamos el JSON a una lista de tareas
+                    // Usamos JsonSerializerOptions para manejar la deserialización de enumeraciones
+                    var opciones = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                        Converters = { new JsonStringEnumConverter() }
+                    };
+                    // Deserializamos el JSON a una BindingList de Tarea
+                    tareas = JsonSerializer.Deserialize<BindingList<Tarea>>(jsonString, opciones);
+                    // Verificamos si la deserialización fue exitosa
+                    if (tareas != null)
+                    {
+                        dataGridView1.Rows.Clear(); // Limpiamos el DataGridView antes de agregar las tareas
+                        MostrarTareas(); // Mostramos las tareas en el DataGridView
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se encontraron tareas en el archivo JSON.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (JsonException ex)
+                {
+                    MessageBox.Show("Error al leer el archivo JSON: " + ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Metodo para exportar las tareas a un archivo JSON.
+        /// </summary>
+        public void ExportarJSON(object sender, EventArgs e)
+        {
+
+            try {
+                //Creamos una lista de tareas (lista de tareas con los cambios realizados)
+                List<Tarea> tareasActualizadas = new List<Tarea>();
+                foreach (DataGridViewRow fila in dataGridView1.Rows)
+                {
+                    if (!fila.IsNewRow) {
+
+                        String descripcion = fila.Cells["Descripcion"].Value?.ToString();
+                        DateTime fecha = Convert.ToDateTime(fila.Cells["Fecha"].Value);
+                        bool realizada = Convert.ToBoolean(fila.Cells["realizada"]);
+                        Tarea t = new Tarea(descripcion, fecha, realizada);
+                        tareasActualizadas.Add(t);
+                    }
+                    
+                }
+                // Creamos un SaveFileDialog para permitir al usuario seleccionar la ubicación y el nombre del archivo
+                JsonSerializerOptions opciones = new JsonSerializerOptions
+                {
+                    WriteIndented = true, // Para que el JSON sea legible
+                    Converters = { new JsonStringEnumConverter() } // Para manejar enumeraciones como cadenas
+                };
+                String miJSON = JsonSerializer.Serialize(tareas);
+                GuardarArchivoJSON(miJSON);
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al exportar las tareas a JSON: " + ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
+        }
+
+        /// <summary>
+        /// Metodo para obtener la ruta del archivo JSON seleccionado por el usuario.
+        /// </summary>
+        /// <returns>Ruta del archivo JSON</returns>
+        public String ObtenerRutaArchivo()
+        {
+            String rutaArchivo = "";
+            
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "JSON files (*.json)|*.json",
+                Title = "Selecciona un archivo JSON"
+            };
+            
+            if (openFileDialog.ShowDialog() == DialogResult.OK && Path.GetExtension(openFileDialog.FileName).ToLower()==".json") 
+                 rutaArchivo = openFileDialog.FileName;
+            else
+                MessageBox.Show("No se seleccionó ningún archivo o el archivo no es del formato deseado","Archivo no valido",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            
+            Console.WriteLine("Ruta del archivo seleccionado: " + rutaArchivo);
+            return rutaArchivo;
+
+        }
+
+        /// <summary>
+        /// Método para guardar un archivo JSON con el contenido proporcionado.
+        /// </summary>
+        /// <param name="s"></param>
+        public void GuardarArchivoJSON(String s) {
+
+            try
+            {   // Creamos un objeto SaveFileDialog para permitir al usuario seleccionar la ubicación y el nombre del archivo
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Archivo JSON (*.json)|*.json",
+                    Title = "Guardar archivo JSON",
+                    DefaultExt = "json"
+                };
+                
+                if (saveFileDialog.ShowDialog() == DialogResult.OK && Path.GetExtension(saveFileDialog.FileName).ToLower() == ".json")
+                {
+                    File.WriteAllText(saveFileDialog.FileName, s);
+                    MessageBox.Show("Archivo guardado correctamente en: " + saveFileDialog.FileName, "ÉXITO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("No se seleccionó ningún archivo o el archivo no es del formato deseado", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error inesperado: " + ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        
+        }
+
+        private void dataGridView1_estadoCambiado(object sender, EventArgs e)
+        {
+            if (dataGridView1.IsCurrentCellDirty)
+            {
+                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
 
 
 
