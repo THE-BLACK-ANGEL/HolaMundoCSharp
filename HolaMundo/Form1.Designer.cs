@@ -13,7 +13,6 @@ namespace HolaMundo
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dataGridView1;
         private Button button1;
@@ -24,6 +23,7 @@ namespace HolaMundo
         private DataGridViewCheckBoxColumn Realizada;
         private DataGridViewTextBoxColumn Fecha;
         private DataGridViewTextBoxColumn descripcion;
+        private DataGridViewCheckBoxColumn realizada;
     }
 }
 

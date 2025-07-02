@@ -7,9 +7,6 @@ using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 
-
-
-
 namespace HolaMundo
 {
     public partial class Form1 : Form
@@ -29,17 +26,16 @@ namespace HolaMundo
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.realizada = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Realizada = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,16 +75,6 @@ namespace HolaMundo
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 3;
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(36, 308);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(97, 17);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "Sin fecha limite";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // label3
             // 
             this.label3.BackColor = System.Drawing.SystemColors.Info;
@@ -105,7 +91,7 @@ namespace HolaMundo
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
-            this.Realizada,
+            this.realizada,
             this.Fecha,
             this.descripcion});
             this.dataGridView1.Location = new System.Drawing.Point(274, 144);
@@ -113,10 +99,32 @@ namespace HolaMundo
             this.dataGridView1.Size = new System.Drawing.Size(553, 360);
             this.dataGridView1.TabIndex = 6;
             // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            // 
+            // realizada
+            // 
+            this.realizada.HeaderText = "Realizada";
+            this.realizada.Name = "realizada";
+            // 
+            // Fecha
+            // 
+            this.Fecha.HeaderText = "Fecha Limite";
+            this.Fecha.Name = "Fecha";
+            this.Fecha.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // descripcion
+            // 
+            this.descripcion.HeaderText = "Descripcion";
+            this.descripcion.Name = "descripcion";
+            this.descripcion.Width = 275;
+            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button1.Location = new System.Drawing.Point(65, 343);
+            this.button1.Location = new System.Drawing.Point(64, 317);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(142, 23);
             this.button1.TabIndex = 7;
@@ -127,7 +135,7 @@ namespace HolaMundo
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button2.Location = new System.Drawing.Point(64, 372);
+            this.button2.Location = new System.Drawing.Point(63, 346);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(143, 23);
             this.button2.TabIndex = 8;
@@ -157,28 +165,6 @@ namespace HolaMundo
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.ExportarJSON);
             // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            // 
-            // Realizada
-            // 
-            this.Realizada.HeaderText = "Realizada";
-            this.Realizada.Name = "realizada";
-            // 
-            // Fecha
-            // 
-            this.Fecha.HeaderText = "Fecha Limite";
-            this.Fecha.Name = "Fecha";
-            this.Fecha.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // descripcion
-            // 
-            this.descripcion.HeaderText = "Descripcion";
-            this.descripcion.Name = "descripcion";
-            this.descripcion.Width = 275;
-            // 
             // Form1
             // 
             this.BackColor = System.Drawing.SystemColors.Info;
@@ -189,7 +175,6 @@ namespace HolaMundo
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -209,7 +194,9 @@ namespace HolaMundo
         /// <param name="e"></param>
         public void AñadirTarea(object sender, EventArgs e)
         {
-            Tarea nuevaTarea = new Tarea(textBox1.Text,dateTimePicker1.Value,checkBox1.Checked);
+            // Creamos una nueva tarea con los datos introducidos en el formulario
+            Tarea nuevaTarea = new Tarea(textBox1.Text,dateTimePicker1.Value,false);
+            // Añadimos la nueva tarea a la lista de tareas
             tareas.Add(nuevaTarea);
             dataGridView1.Rows.Clear(); // Limpiar el DataGridView antes de agregar nuevas filas
             MostrarTareas(); // Mostrar las tareas
@@ -223,7 +210,7 @@ namespace HolaMundo
         /// <param name="e"></param>
         public void EliminarTarea(object sender, EventArgs e)
         {
-
+            // Verificamos si hay filas seleccionadas en el DataGridView
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 // Obtenemos el objeto que está en la fila seleccionada
@@ -235,6 +222,7 @@ namespace HolaMundo
                     if (celda.OwningColumn.Name == "ID")
                     {
                         int idTarea = Convert.ToInt32(celda.Value);
+                       
                         // Buscamos la tarea en la lista de tareas por su ID
                         tareaSeleccionada = tareas.FirstOrDefault(t => t.ID == idTarea);
                         if (tareaSeleccionada != null)
@@ -243,13 +231,15 @@ namespace HolaMundo
                             tareas.Remove(tareaSeleccionada);
                             break; // Salimos del bucle una vez que hemos encontrado y eliminado la tarea
                         }
+
                     }
                 }
-
+                // Si la tarea seleccionada es nula, significa que no se encontró en la lista
                 if (tareaSeleccionada != null)
                 {
                     tareas.Remove(tareaSeleccionada); // Se elimina de la lista
                 }
+
                 dataGridView1.Rows.Clear();// Limpiamos el DataGridView antes de agregar la lista actualizada
                 MostrarTareas();
             }
@@ -328,28 +318,41 @@ namespace HolaMundo
                 List<Tarea> tareasActualizadas = new List<Tarea>();
 
                 // Recorremos las filas del DataGridView y creamos una lista de tareas actualizadas
-                // NO FUNCIONA COMO TAL PARA LO QUE ESTA HECHO, PERO ME SIRVE PARA OBTENER LOS DATOS DE LAS CELDAS
-                // Y PODER EXPORTARLAS A UN JSON.
                 foreach (DataGridViewRow fila in dataGridView1.Rows)
                 {
-                    // Verificamos que la fila no sea una nueva fila (la última fila vacía del DataGridView)
-                    if (!fila.IsNewRow) {
 
-                        String descripcion = fila.Cells["Descripcion"].Value?.ToString();
+                    if (fila.IsNewRow) continue;
+                    {
+
+                        // Obtenemos los valores de las celdas de la fila
+                        String descripcion = fila.Cells["Descripcion"].Value?.ToString() ?? "";
                         DateTime fecha = Convert.ToDateTime(fila.Cells["Fecha"].Value);
+
+                        // Verificamos si la tarea está realizada y si no hay valor, la marcamos como realizada
                         bool realizada = Convert.ToBoolean(fila.Cells["Realizada"].Value);
+                        
+                        // Creamos una nueva tarea con los valores obtenidos
                         Tarea t = new Tarea(descripcion, fecha, realizada);
-                        tareasActualizadas.Add(t);
+
+                        // Añadimos la tarea a la lista de tareas actualizadas si la fecha es futura y no está realizada
+                        if (t.fecha > DateTime.Now && t.realizada == false)
+                            tareasActualizadas.Add(t);
+                    
                     }
                     
                 }
+
                 // Creamos un SaveFileDialog para permitir al usuario seleccionar la ubicación y el nombre del archivo
                 JsonSerializerOptions opciones = new JsonSerializerOptions
                 {
                     WriteIndented = true, // Para que el JSON sea legible
                     Converters = { new JsonStringEnumConverter() } // Para manejar enumeraciones como cadenas
                 };
-                String miJSON = JsonSerializer.Serialize(tareas);
+
+                // Serializamos la lista de tareas a JSON
+                String miJSON = JsonSerializer.Serialize(tareasActualizadas);
+
+                // Guardamos el JSON en un archivo
                 GuardarArchivoJSON(miJSON);
 
 
@@ -368,20 +371,26 @@ namespace HolaMundo
         /// <returns>Ruta del archivo JSON</returns>
         public String ObtenerRutaArchivo()
         {
+            // Creamos una variable para almacenar la ruta del archivo seleccionado
             String rutaArchivo = "";
-            
+
+            // Creamos un objeto OpenFileDialog para permitir al usuario seleccionar un archivo JSON
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Filter = "JSON files (*.json)|*.json",
                 Title = "Selecciona un archivo JSON"
             };
-            
+
+            // Mostramos el diálogo para que el usuario seleccione un archivo y si se selecciona un archivo válido, guardamos la ruta
             if (openFileDialog.ShowDialog() == DialogResult.OK && Path.GetExtension(openFileDialog.FileName).ToLower()==".json") 
                  rutaArchivo = openFileDialog.FileName;
             else
                 MessageBox.Show("No se seleccionó ningún archivo o el archivo no es del formato deseado","Archivo no valido",MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            
+
+            // Mostramos la ruta del archivo seleccionado en la consola (o en un MessageBox si se prefiere)
             Console.WriteLine("Ruta del archivo seleccionado: " + rutaArchivo);
+            
+            // Retornamos la ruta del archivo seleccionado
             return rutaArchivo;
 
         }
@@ -401,7 +410,7 @@ namespace HolaMundo
                     DefaultExt = "json"
                 };
 
-                // Mostramos el diálogo para que el usuario seleccione la ubicación y el nombre del archivo
+                // Mostramos el diálogo para que el usuario seleccione la ubicación y el nombre del archivo, si se selecciona un archivo válido, guardamos el contenido del JSON en el archivo
                 if (saveFileDialog.ShowDialog() == DialogResult.OK && Path.GetExtension(saveFileDialog.FileName).ToLower() == ".json")
                 {
                     // Guardamos el contenido del JSON en el archivo seleccionado
@@ -420,19 +429,6 @@ namespace HolaMundo
             }
         
         }
-
-        //Metodo para manejar el evento de cambio de estado del DataGridView en caso de que se modifique una celda.
-        //PD : NO ME FUNCIONA Y NO SE POR QUÉ, ASÍ QUE LO DEJO COMENTADO.
-        /*private void dataGridView1_estadoCambiado(object sender, EventArgs e)
-        {
-            if (dataGridView1.IsCurrentCellDirty)
-            {
-                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            }
-        }
-        */
-
-
 
     }
 }
