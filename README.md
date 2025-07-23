@@ -16,5 +16,5 @@ Es una aplicación que no está muy culminada, por lo que, se le pueden añadir 
 ...
 
 ## LENGUAJES USADOS EN ESTE PROYECTO
-![C#](https://img.shields.io/badge/C%23-.NET-blueviolet?logo=csharp)
+![C#](https://img.shields.io/badge/C%23?logo=csharp)
 ![Windows Forms](https://img.shields.io/badge/WinForms-UI-blue?logo=windows)
