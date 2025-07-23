@@ -19,3 +19,6 @@ Es una aplicación que no está muy culminada, por lo que, se le pueden añadir 
 ![Lenguaje](https://img.shields.io/badge/C%23-.NET-blueviolet?logo=csharp)
 ![Framework](https://img.shields.io/badge/.NET_Framework-4.8-512BD4)
 ![UI](https://img.shields.io/badge/WinForms-UI-blue?logo=windows)
+
+>[!IMPORTANT]
+>Hay que usar Visual Studio 2022 por temas de compatibilidad
