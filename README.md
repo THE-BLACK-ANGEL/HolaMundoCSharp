@@ -18,4 +18,4 @@ Es una aplicación que no está muy culminada, por lo que, se le pueden añadir 
 
 ## LENGUAJES USADOS EN ESTE PROYECTO
 ![C#](https://img.shields.io/badge/C%23-.NET-blueviolet?logo=csharp)
-![imagen C#](https://img.icons8.com/?size=100&id=TpULddJc4gTh&format=png&color=000000)
+>>![imagen C#](https://img.icons8.com/?size=100&id=TpULddJc4gTh&format=png&color=000000)
