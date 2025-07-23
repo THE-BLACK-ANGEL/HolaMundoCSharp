@@ -15,4 +15,4 @@ Es una aplicación que no está muy culminada, por lo que, se le pueden añadir 
 --> Hacer que puedas exportar e importar una lista de tareas usando SQL tambien.
 ...
 
-![Logo lenguaje usado para el proyecto](https://img.icons8.com/?size=200&id=TpULddJc4gTh&format=png&color=000000)
+![Logo lenguaje usado para el proyecto](https://img.icons8.com/?size=100&id=TpULddJc4gTh&format=png&color=000000)
