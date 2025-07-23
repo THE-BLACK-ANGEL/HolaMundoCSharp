@@ -23,4 +23,3 @@ Es una aplicación que no está muy culminada, por lo que, se le pueden añadir 
 >[!IMPORTANT]
 >Hay que usar Visual Studio 2022 por temas de compatibilidad
 
-LA LALALALA
