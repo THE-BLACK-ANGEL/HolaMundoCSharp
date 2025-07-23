@@ -15,4 +15,4 @@ Es una aplicación que no está muy culminada, por lo que, se le pueden añadir 
 --> Hacer que puedas exportar e importar una lista de tareas usando SQL tambien.
 ...
 
-![Logo lenguaje usado para el proyecto](https://images.icon-icons.com/2415/PNG/512/csharp_original_logo_icon_146578.png)
+![Logo lenguaje usado para el proyecto](https://images.icon-icons.com/2415/PNG/512/csharp_original_logo_icon_146578.png){width=300}
