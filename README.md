@@ -15,5 +15,4 @@ Es una aplicación que no está muy culminada, por lo que, se le pueden añadir 
 --> Hacer que puedas exportar e importar una lista de tareas usando SQL tambien.
 ...
 
-![Logo lenguaje usado para el proyecto](https://img.shields.io/badge/dynamic/json)
-![Java](https://img.shields.io/badge/Java-17-orange?logo=openjdk)
+![C#](https://img.shields.io/badge/C%23-.NET-blueviolet?logo=csharp)
