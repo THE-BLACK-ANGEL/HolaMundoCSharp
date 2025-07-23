@@ -15,4 +15,6 @@ Es una aplicación que no está muy culminada, por lo que, se le pueden añadir 
 --> Hacer que puedas exportar e importar una lista de tareas usando SQL tambien.
 ...
 
+
+## LENGUAJES USADOS EN ESTE PROYECTO
 ![C#](https://img.shields.io/badge/C%23-.NET-blueviolet?logo=csharp)
